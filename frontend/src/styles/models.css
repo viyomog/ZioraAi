@@ -1,0 +1,278 @@
+/* Modern Models Page Styles for ZioraAi */
+
+.models-page {
+  width: 100%;
+  background: var(--primary-dark);
+}
+
+/* Models Header */
+.models-header {
+  text-align: center;
+  padding: 100px 0 50px;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary-darker));
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.models-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 25%);
+  z-index: 0;
+}
+
+.models-header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.models-header h1 {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.models-header p {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Models Section */
+.models-section {
+  padding: 100px 0;
+  background: var(--primary-dark);
+  width: 100%;
+}
+
+.models-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.models-section h2 {
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin-bottom: 50px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.models-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+/* Models Grid */
+.models-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+/* Model Card */
+.model-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  background: var(--secondary-dark);
+  border-radius: 12px;
+  padding: 30px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
+}
+
+.model-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.model-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.free-model::before {
+  background: var(--success);
+}
+
+.premium-model::before {
+  background: var(--gradient-primary);
+}
+
+/* Model Card Header */
+.model-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.model-card-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
+.model-provider {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent-blue);
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Model Description */
+.model-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-size: 1rem;
+  flex-grow: 1;
+}
+
+/* Model Footer */
+.model-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: auto;
+}
+
+/* Buttons */
+.btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(59, 130, 246, 0.2);
+}
+
+.btn-secondary {
+  background: var(--secondary-dark);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: var(--primary-darker);
+  transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .models-header h1 {
+    font-size: 3rem;
+  }
+  
+  .models-section {
+    padding: 80px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .models-header {
+    padding: 80px 0 40px;
+  }
+  
+  .models-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .models-header p {
+    font-size: 1.2rem;
+  }
+  
+  .models-section {
+    padding: 60px 0;
+  }
+  
+  .models-section h2 {
+    font-size: 2rem;
+  }
+  
+  .models-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .model-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .models-header {
+    padding: 60px 0 30px;
+  }
+  
+  .models-header h1 {
+    font-size: 2rem;
+  }
+  
+  .models-section h2 {
+    font-size: 1.75rem;
+  }
+  
+  .model-card {
+    padding: 25px;
+  }
+  
+  .model-card-header h3 {
+    font-size: 1.3rem;
+  }
+}

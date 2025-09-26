@@ -1,0 +1,26 @@
+.app {
+  min-height: 100vh;
+  background: var(--primary-dark);
+  position: relative;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.app::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 20%);
+  z-index: -1;
+}
+
+.main-content {
+  padding-top: 90px;
+  min-height: calc(100vh - 180px);
+  width: 100%;
+}

@@ -1,0 +1,280 @@
+/* Modern About Page Styles for ZioraAi */
+
+.about-page {
+  width: 100%;
+  background: var(--primary-dark);
+}
+
+/* About Header */
+.about-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary-darker));
+  padding: 100px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.about-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 25%);
+  z-index: 0;
+}
+
+.about-header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.about-header h1 {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.about-header p {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* About Content */
+.about-content {
+  padding: 100px 0;
+  background: var(--primary-dark);
+  width: 100%;
+}
+
+.about-content .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.about-section {
+  margin-bottom: 70px;
+  padding: 40px;
+  background: var(--secondary-dark);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: var(--text-primary);
+}
+
+.about-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.about-section h2 {
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin-bottom: 30px;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.about-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+.about-section p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+/* Founder Section */
+.founder-content {
+  margin-top: 30px;
+}
+
+.founder-text {
+  flex: 1;
+}
+
+.founder-text h3 {
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.founder-text p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.founder-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Journey Section */
+.journey-content {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.journey-text {
+  flex: 2;
+}
+
+.journey-text p:first-child {
+  margin-top: 0;
+}
+
+/* Commitment Section */
+.commitment-content {
+  margin-top: 30px;
+}
+
+.commitment-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.commitment-item {
+  padding: 30px;
+  background: var(--primary-darker);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.commitment-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.commitment-item h3 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 15px;
+}
+
+.commitment-item p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .about-header h1 {
+    font-size: 3rem;
+  }
+  
+  .about-section h2 {
+    font-size: 2.2rem;
+  }
+  
+  .commitment-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-header {
+    padding: 80px 0;
+  }
+  
+  .about-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .about-header p {
+    font-size: 1.2rem;
+  }
+  
+  .about-content {
+    padding: 80px 0;
+  }
+  
+  .about-content .container {
+    padding: 0 15px;
+  }
+  
+  .founder-content,
+  .journey-content {
+    flex-direction: column;
+    padding: 30px;
+  }
+  
+  .founder-image,
+  .journey-text {
+    width: 100%;
+  }
+  
+  .about-section {
+    padding: 30px;
+    margin-bottom: 50px;
+  }
+  
+  .about-section h2 {
+    font-size: 2rem;
+  }
+  
+  .commitment-item {
+    padding: 25px;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-header {
+    padding: 60px 0;
+  }
+  
+  .about-header h1 {
+    font-size: 2rem;
+  }
+  
+  .about-content {
+    padding: 60px 0;
+  }
+  
+  .about-section {
+    padding: 25px;
+  }
+  
+  .about-section h2 {
+    font-size: 1.75rem;
+  }
+  
+  .founder-text h3 {
+    font-size: 1.5rem;
+  }
+  
+  .commitment-item {
+    padding: 20px;
+  }
+  
+  .commitment-item h3 {
+    font-size: 1.3rem;
+  }
+}

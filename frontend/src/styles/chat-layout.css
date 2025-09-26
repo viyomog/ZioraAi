@@ -1,0 +1,224 @@
+/* Chat Layout Styles for Full-Screen Chat */
+
+.chat-layout {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Dropdown Menu Styles */
+.chat-header-dropdown {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+  background: rgba(15, 23, 42, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hamburger-icon span {
+  width: 22px;
+  height: 2px;
+  background: var(--text-primary);
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.dropdown-toggle:hover .hamburger-icon span {
+  background: var(--accent-blue);
+}
+
+.menu-label {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 300px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  margin-top: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 1002;
+}
+
+.chat-header-dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-content {
+  padding: 25px;
+}
+
+.dropdown-logo {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-logo .logo-link {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-navigation ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dropdown-navigation .nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 15px 20px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.dropdown-navigation .nav-link:hover {
+  color: var(--text-primary);
+  background: rgba(30, 41, 59, 0.7);
+  transform: translateX(5px);
+}
+
+.dropdown-navigation .nav-link.active {
+  color: var(--text-primary);
+  background: rgba(30, 41, 59, 0.9);
+}
+
+.dropdown-navigation .nav-link.active::after {
+  content: '';
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--gradient-primary);
+  border-radius: 50%;
+}
+
+.dropdown-auth {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-auth .get-started-link {
+  display: block;
+  text-align: center;
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 15px 20px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: rgba(59, 130, 246, 0.1);
+  border: 2px solid rgba(59, 130, 246, 0.3);
+}
+
+.dropdown-auth .get-started-link:hover {
+  background: rgba(59, 130, 246, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+}
+
+/* Main Content */
+.chat-main-content {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    width: 280px;
+    right: 20px;
+    left: auto;
+  }
+  
+  .dropdown-content {
+    padding: 20px;
+  }
+  
+  .dropdown-navigation .nav-link {
+    padding: 12px 15px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .chat-header-dropdown {
+    top: 15px;
+    left: 15px;
+  }
+  
+  .dropdown-menu {
+    width: 260px;
+  }
+  
+  .dropdown-content {
+    padding: 15px;
+  }
+  
+  .dropdown-logo {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+  }
+  
+  .dropdown-logo .logo-link {
+    font-size: 1.8rem;
+  }
+  
+  .dropdown-navigation .nav-link {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+}
