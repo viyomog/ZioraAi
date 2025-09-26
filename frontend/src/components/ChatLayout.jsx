@@ -60,7 +60,7 @@ const ChatLayout = ({ children }) => {
                     to="/pricing" 
                     className={isActive('/pricing') ? 'nav-link active' : 'nav-link'}
                   >
-                    Pricing
+                    Pricing Plans
                   </Link>
                 </li>
                 <li>
@@ -68,7 +68,7 @@ const ChatLayout = ({ children }) => {
                     to="/models" 
                     className={isActive('/models') ? 'nav-link active' : 'nav-link'}
                   >
-                    Models
+                    AI Models
                   </Link>
                 </li>
                 {isLoggedIn && (
@@ -86,7 +86,7 @@ const ChatLayout = ({ children }) => {
                     to="/about" 
                     className={isActive('/about') ? 'nav-link active' : 'nav-link'}
                   >
-                    About
+                    About Us
                   </Link>
                 </li>
                 <li>
@@ -111,7 +111,7 @@ const ChatLayout = ({ children }) => {
                     setIsLoggedIn(false);
                     window.location.href = '/';
                   }}>
-                    Logout
+                    Sign Out
                   </Link>
                 ) : (
                   <Link to="/login" className="get-started-link">

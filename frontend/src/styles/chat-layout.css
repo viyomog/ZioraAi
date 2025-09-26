@@ -1,4 +1,4 @@
-/* Chat Layout Styles for Full-Screen Chat */
+/* Chat Layout Styles for Full-Screen Chat - Enhanced Scroll Functionality */
 
 .chat-layout {
   width: 100%;
@@ -65,7 +65,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  width: 300px;
+  width: 320px;
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -78,6 +78,8 @@
   transform: translateY(10px);
   transition: all 0.3s ease;
   z-index: 1002;
+  max-height: calc(100vh - 100px);
+  overflow: hidden;
 }
 
 .chat-header-dropdown.open .dropdown-menu {
@@ -88,6 +90,26 @@
 
 .dropdown-content {
   padding: 25px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.dropdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 3px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  background: var(--accent-blue);
+  border-radius: 3px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-purple);
 }
 
 .dropdown-logo {
@@ -107,6 +129,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin: 0;
+  padding: 0;
 }
 
 .dropdown-navigation .nav-link {
@@ -118,6 +142,7 @@
   border-radius: 12px;
   transition: all 0.3s ease;
   display: block;
+  position: relative;
 }
 
 .dropdown-navigation .nav-link:hover {

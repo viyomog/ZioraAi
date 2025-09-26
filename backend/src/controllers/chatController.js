@@ -1,6 +1,8 @@
 const Chat = require('../models/Chat');
 const User = require('../models/User');
-const fetch = require('node-fetch');
+
+// Use built-in fetch for Node.js 18+
+const fetch = globalThis.fetch || require('node-fetch').default;
 
 // Create a new chat
 const createChat = async (req, res) => {
@@ -145,7 +147,7 @@ const sendMessage = async (req, res) => {
 
     // Add user message to chat
     const userMessage = {
-      sender: req.user.id,
+      sender: req.user.id, // User ID for user messages
       content,
       model,
       timestamp: new Date()
@@ -153,7 +155,7 @@ const sendMessage = async (req, res) => {
 
     // Add AI response to chat
     const aiMessage = {
-      sender: 'ai',
+      sender: 'ai', // String identifier for AI messages
       content: aiResponse,
       model,
       timestamp: new Date()
@@ -165,8 +167,12 @@ const sendMessage = async (req, res) => {
     
     const updatedChat = await chat.save();
     
-    // Populate sender info
-    await updatedChat.populate('messages.sender', 'name username email role');
+    // Populate sender info for user messages only
+    await updatedChat.populate({
+      path: 'messages.sender',
+      select: 'name username email role',
+      match: { _id: { $ne: 'ai' } } // Only populate for non-AI messages
+    });
     
     // Return the AI message
     const lastMessage = updatedChat.messages[updatedChat.messages.length - 1];
@@ -185,7 +191,11 @@ const getChatMessages = async (req, res) => {
     // Find chat and check if user is participant
     const chat = await Chat.findById(chatId)
       .populate('participants', 'name username email role')
-      .populate('messages.sender', 'name username email role');
+      .populate({
+        path: 'messages.sender',
+        select: 'name username email role',
+        match: { _id: { $ne: 'ai' } } // Only populate for non-AI messages
+      });
       
     if (!chat) {
       return res.status(404).json({ message: 'Chat not found' });

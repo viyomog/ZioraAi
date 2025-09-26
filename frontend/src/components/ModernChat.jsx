@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
 import '../styles/chat-modern.css';
 
 const ModernChat = () => {
@@ -13,6 +14,7 @@ const ModernChat = () => {
   const [userRole, setUserRole] = useState('starter');
   const [showModelPopup, setShowModelPopup] = useState(false);
   const [isComposing, setIsComposing] = useState(false);
+  const [userName, setUserName] = useState('You'); // Add user name state
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
   const API_URL = import.meta.env.VITE_API_URL;
@@ -22,76 +24,76 @@ const ModernChat = () => {
     starter: [
       { 
         id: 'xAI: Grok 4 Fast', 
-        name: 'xAI: Grok 4 Fast', 
+        name: 'Grok 4 Fast', 
         value: 'x-ai/grok-4-fast:free',
-        description: 'Advanced AI model developed by xAI for complex reasoning tasks',
+        description: 'Advanced AI model developed by xAI for complex reasoning tasks with exceptional speed',
         category: 'General Purpose'
       },
       { 
         id: 'NVIDIA: Nemotron Nano 9B V2', 
-        name: 'NVIDIA: Nemotron Nano 9B V2', 
+        name: 'Nemotron Nano 9B V2', 
         value: 'nvidia/nemotron-nano-9b-v2:free',
-        description: 'Efficient model optimized for code generation and technical tasks',
+        description: 'Efficient model optimized for code generation and technical tasks with NVIDIA acceleration',
         category: 'Code & Technical'
       },
       { 
         id: 'DeepSeek: DeepSeek V3.1', 
-        name: 'DeepSeek: DeepSeek V3.1', 
+        name: 'DeepSeek V3.1', 
         value: 'deepseek/deepseek-chat-v3.1:free',
-        description: 'High-performance model for natural language understanding',
+        description: 'High-performance model for natural language understanding with enhanced contextual awareness',
         category: 'Natural Language'
       },
       { 
         id: 'OpenAI: gpt-oss-20b', 
-        name: 'OpenAI: gpt-oss-20b', 
+        name: 'GPT-OSS 20B', 
         value: 'openai/gpt-oss-20b:free',
-        description: 'Open-source variant of GPT with strong general capabilities',
+        description: 'Open-source variant of GPT with strong general capabilities and ethical alignment',
         category: 'General Purpose'
       }
     ],
     professional: [
       { 
         id: 'Google: Gemma 3n 2B', 
-        name: 'Google: Gemma 3n 2B', 
+        name: 'Gemma 3n 2B', 
         value: 'google/gemma-3n-e2b-it:free',
-        description: 'Lightweight yet powerful model optimized for instruction following',
+        description: 'Lightweight yet powerful model optimized for instruction following and task execution',
         category: 'Instruction Following'
       },
       { 
         id: 'Meta: Llama 3.3 8B Instruct', 
-        name: 'Meta: Llama 3.3 8B Instruct', 
+        name: 'Llama 3.3 8B Instruct', 
         value: 'meta-llama/llama-3.3-8b-instruct:free',
-        description: 'Industry-leading model for complex reasoning and dialogue',
+        description: 'Industry-leading model for complex reasoning, dialogue, and creative content generation',
         category: 'Complex Reasoning'
       },
       { 
         id: 'Dolphin3.0 Mistral 24B', 
-        name: 'Dolphin3.0 Mistral 24B', 
+        name: 'Dolphin 3.0 Mistral 24B', 
         value: 'cognitivecomputations/dolphin3.0-mistral-24b:free',
-        description: 'Specialized model for coding assistance and technical tasks',
+        description: 'Specialized model for coding assistance, technical tasks, and system administration',
         category: 'Code & Technical'
       },
       { 
         id: 'MoonshotAI: Kimi Dev 72B', 
-        name: 'MoonshotAI: Kimi Dev 72B', 
+        name: 'Kimi Dev 72B', 
         value: 'moonshotai/kimi-dev-72b:free',
-        description: 'Large-scale model with exceptional multilingual capabilities',
+        description: 'Large-scale model with exceptional multilingual capabilities and deep contextual understanding',
         category: 'Multilingual'
       }
     ],
     enterprise: [
       { 
         id: 'Enterprise Exclusive Model 1', 
-        name: 'Enterprise Exclusive Model 1', 
+        name: 'Enterprise Pro Model', 
         value: 'enterprise/model-1',
-        description: 'Exclusive model for enterprise users with advanced capabilities',
+        description: 'Exclusive model for enterprise users with advanced capabilities, enhanced security, and priority processing',
         category: 'Enterprise'
       },
       { 
         id: 'Enterprise Exclusive Model 2', 
-        name: 'Enterprise Exclusive Model 2', 
+        name: 'Enterprise Ultra Model', 
         value: 'enterprise/model-2',
-        description: 'Premium model with specialized enterprise features',
+        description: 'Premium model with specialized enterprise features, custom fine-tuning, and dedicated resources',
         category: 'Enterprise'
       }
     ]
@@ -110,14 +112,6 @@ const ModernChat = () => {
   };
 
   const availableModels = getAvailableModels();
-
-  // Auto-resize textarea
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
-    }
-  }, [newMessage]);
 
   // Initialize component
   useEffect(() => {
@@ -140,15 +134,19 @@ const ModernChat = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Fetch user role
+  // Fetch user role and name
   const fetchUserRole = async (token) => {
     try {
       const response = await axios.get(`${API_URL}/api/users/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setUserRole(response.data.role);
+      setUserRole(response.data.role || 'starter');
+      // Set user name from profile or default to 'You'
+      setUserName(response.data.name || response.data.username || 'You');
     } catch (error) {
       console.error('Error fetching user role:', error);
+      setUserRole('starter');
+      setUserName('You');
     }
   };
 
@@ -171,7 +169,7 @@ const ModernChat = () => {
       }
     } catch (error) {
       console.error('Error fetching chats:', error);
-      setError('Failed to fetch chats');
+      setError('Failed to fetch conversations. Please try again later.');
     }
   };
 
@@ -186,7 +184,7 @@ const ModernChat = () => {
       setMessages(response.data);
     } catch (error) {
       console.error('Error fetching messages:', error);
-      setError('Failed to fetch messages');
+      setError('Failed to load messages. Please try again later.');
     }
   };
 
@@ -215,7 +213,7 @@ const ModernChat = () => {
       setShowModelPopup(false);
     } catch (error) {
       console.error('Error creating chat:', error);
-      setError('Failed to create chat');
+      setError('Failed to create new conversation. Please try again.');
     }
   };
 
@@ -259,7 +257,7 @@ const ModernChat = () => {
       setMessages(prev => [...prev, response.data]);
     } catch (error) {
       console.error('Error sending message:', error);
-      setError(`Failed to send message: ${error.response?.data?.message || error.message}`);
+      setError(`Failed to send message: ${error.response?.data?.message || 'Please try again'}`);
     } finally {
       setLoading(false);
     }
@@ -328,7 +326,7 @@ const ModernChat = () => {
               </button>
             </div>
             <div className="model-popup-content">
-              <p>Choose an AI model to start your new chat. Each model has unique strengths for different tasks.</p>
+              <p>Choose an AI model to start your new conversation. Each model has unique strengths for different tasks.</p>
               <div className="model-options">
                 {availableModels.map(model => (
                   <div 
@@ -375,7 +373,7 @@ const ModernChat = () => {
             >
               <div className="chat-item-content">
                 <div className="chat-item-title">
-                  {chat.participants[0]?.name || 'Untitled Chat'}
+                  {chat.title || 'Untitled Conversation'}
                 </div>
                 <div className="chat-item-preview">
                   {chat.messages?.length > 0 ? chat.messages[chat.messages.length - 1].content.substring(0, 40) + '...' : 'New conversation'}
@@ -406,7 +404,7 @@ const ModernChat = () => {
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                           </svg>
-                          You
+                          {userName} {/* Use user's name instead of hardcoded "You" */}
                         </>
                       ) : (
                         <>
@@ -415,13 +413,37 @@ const ModernChat = () => {
                             <path d="M12 16v-4"></path>
                             <path d="M12 8h.01"></path>
                           </svg>
-                          AI Assistant
+                          AI Assistant {/* Always show "AI Assistant" for AI messages */}
                         </>
                       )}
                     </div>
-                    <div className="message-text">{message.content}</div>
+                    <div className="message-text">
+                      {message.sender?._id === localStorage.getItem('userId') ? (
+                        // User messages - plain text
+                        message.content
+                      ) : (
+                        // AI messages - with markdown support
+                        <ReactMarkdown components={{
+                          h1: ({node, ...props}) => <h1 className="markdown-h1" {...props} />,
+                          h2: ({node, ...props}) => <h2 className="markdown-h2" {...props} />,
+                          h3: ({node, ...props}) => <h3 className="markdown-h3" {...props} />,
+                          p: ({node, ...props}) => <p className="markdown-p" {...props} />,
+                          ul: ({node, ...props}) => <ul className="markdown-ul" {...props} />,
+                          ol: ({node, ...props}) => <ol className="markdown-ol" {...props} />,
+                          li: ({node, ...props}) => <li className="markdown-li" {...props} />,
+                          code: ({node, ...props}) => <code className="markdown-code" {...props} />,
+                          pre: ({node, ...props}) => <pre className="markdown-pre" {...props} />,
+                          blockquote: ({node, ...props}) => <blockquote className="markdown-blockquote" {...props} />,
+                          a: ({node, ...props}) => <a className="markdown-link" {...props} />,
+                          strong: ({node, ...props}) => <strong className="markdown-strong" {...props} />,
+                          em: ({node, ...props}) => <em className="markdown-em" {...props} />
+                        }}>
+                          {message.content}
+                        </ReactMarkdown>
+                      )}
+                    </div>
                     <div className="message-meta">
-                      <span className="message-model">{message.model}</span>
+                      <span className="message-model">{availableModels.find(m => m.value === message.model)?.name || 'AI Model'}</span>
                       <span className="message-time">{formatDate(message.timestamp)}</span>
                     </div>
                   </div>
@@ -511,7 +533,7 @@ const ModernChat = () => {
               
               {userRole === 'starter' && (
                 <div className="upgrade-notice">
-                  <p>Upgrade to Professional or Enterprise plan to access more AI models</p>
+                  <p>Upgrade to Professional or Enterprise plan to access more AI models and advanced features</p>
                   <a href="/pricing" className="btn btn-secondary">View Plans</a>
                 </div>
               )}
@@ -526,7 +548,7 @@ const ModernChat = () => {
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
               </svg>
-              Start New Chat
+              Start New Conversation
             </button>
           </div>
         )}
