@@ -136,10 +136,15 @@ const sendMessage = async (req, res) => {
     // Add previous messages as context (limit to last 5 messages for context)
     const recentMessages = chat.messages.slice(-5);
     for (const msg of recentMessages) {
-      openRouterMessages.unshift(
-        { role: "user", content: msg.content },
-        { role: "assistant", content: msg.response || "..." }
-      );
+      if (msg.sender === 'ai') {
+        openRouterMessages.unshift(
+          { role: "assistant", content: msg.content }
+        );
+      } else {
+        openRouterMessages.unshift(
+          { role: "user", content: msg.content }
+        );
+      }
     }
 
     // Get response from OpenRouter
@@ -154,7 +159,7 @@ const sendMessage = async (req, res) => {
     };
 
     // Add AI response to chat
-    const aiMessage = {
+    const aiMessageObj = {
       sender: 'ai', // String identifier for AI messages
       content: aiResponse,
       model,
@@ -162,7 +167,7 @@ const sendMessage = async (req, res) => {
     };
 
     chat.messages.push(userMessage);
-    chat.messages.push(aiMessage);
+    chat.messages.push(aiMessageObj);
     chat.updatedAt = Date.now();
     
     const updatedChat = await chat.save();
@@ -174,9 +179,34 @@ const sendMessage = async (req, res) => {
       match: { _id: { $ne: 'ai' } } // Only populate for non-AI messages
     });
     
-    // Return the AI message
-    const lastMessage = updatedChat.messages[updatedChat.messages.length - 1];
-    res.json(lastMessage);
+    // Return both user message and AI response
+    const userMessageWithSender = {
+      sender: { _id: req.user.id },
+      content,
+      model,
+      timestamp: userMessage.timestamp
+    };
+    
+    const aiMessageWithSender = {
+      sender: { _id: 'ai' },
+      content: aiResponse,
+      model,
+      timestamp: aiMessageObj.timestamp
+    };
+    
+    // Update chat title if it's the first message
+    let chatTitle = chat.title;
+    if (chatTitle === 'New Conversation' || chat.messages.length === 0) {
+      chatTitle = content.substring(0, 30) + (content.length > 30 ? '...' : '');
+      chat.title = chatTitle;
+      await chat.save();
+    }
+    
+    res.json({
+      userMessage: userMessageWithSender,
+      aiResponse: aiMessageWithSender,
+      chatTitle: chatTitle
+    });
   } catch (error) {
     console.error('Error sending message:', error);
     res.status(500).json({ message: 'Failed to get response from AI model', error: error.message });

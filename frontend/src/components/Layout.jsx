@@ -170,7 +170,7 @@ const Layout = ({ children }) => {
             <div className="social-links">
               <a href="#" className="social-link">Twitter</a>
               <a href="#" className="social-link">Discord</a>
-              <a href="#" className="social-link">GitHub</a>
+              <a href="https://github.com/viyomog" className="social-link">GitHub</a>
             </div>
           </div>
         </div>

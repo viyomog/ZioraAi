@@ -1,10 +1,10 @@
 import React from 'react';
-import ModernChat from '../components/ModernChat';
+import ChatInterface from '../components/ChatInterface';
 
 const Chat = () => {
   return (
     <div className="chat-page">
-      <ModernChat />
+      <ChatInterface />
     </div>
   );
 };
